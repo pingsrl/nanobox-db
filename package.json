@@ -1,0 +1,47 @@
+{
+	"name": "nanobox-db",
+	"description": "Connect to Nanobox.io Database",
+	"version": "0.0.1",
+	"author": "Giacomo Trezzi @G3z",
+	"bin": {
+		"nanobox-db": "./bin/run"
+	},
+	"bugs": "https://github.com/G3z/nanobox-db/issues",
+	"dependencies": {
+		"@oclif/command": "^1.4.34",
+		"@oclif/config": "^1.6.33",
+		"@oclif/plugin-help": "^2.0.5",
+		"node-yaml": "^3.1.1"
+	},
+	"devDependencies": {
+		"@oclif/test": "^1.1.0",
+		"babel-eslint": "^8.2.5",
+		"chai": "^4.1.2",
+		"eslint": "^4.19.1",
+		"eslint-config-oclif": "^1.5.1",
+		"eslint-plugin-react": "^7.10.0",
+		"fancy-test": "^1.2.0",
+		"mocha": "^5.2.0"
+	},
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"files": [
+		"/bin",
+		"/src"
+	],
+	"homepage": "https://github.com/G3z/nanobox-db",
+	"keywords": [
+		"oclif"
+	],
+	"license": "MIT",
+	"main": "src/index.js",
+	"oclif": {
+		"bin": "nanobox-db"
+	},
+	"repository": "G3z/nanobox-db",
+	"scripts": {
+		"posttest": "eslint .",
+		"test": "mocha"
+	}
+}
