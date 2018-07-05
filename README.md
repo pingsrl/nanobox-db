@@ -1,6 +1,7 @@
 # nanobox-db
 
 Connect to Nanobox.io Database
+
 Currently Mac OS only
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
@@ -9,7 +10,15 @@ Currently Mac OS only
 [![Downloads/week](https://img.shields.io/npm/dw/nanobox-db.svg)](https://npmjs.org/package/nanobox-db)
 [![License](https://img.shields.io/npm/l/nanobox-db.svg)](https://github.com/G3z/nanobox-db/blob/master/package.json)
 
-<!-- toc -->
+# What is this?
+
+This is a simple tool that opens the database component of [nanobox.io](http://nanobox.io) in your favorite ide (It must support URI like `mysql://` o `postgres://`)
+
+# Installation
+
+    npm i -g nanobox-db
+
+# Usage
 
     $ cd my-nanobox-project
     $ nanobox-db
