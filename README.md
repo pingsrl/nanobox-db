@@ -1,18 +1,32 @@
-nanotools
-=========
+# nanotools
 
 Connect to Nanobox.io Database
 
+Currently tested on Mac OS only
+
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/nanotools.svg)](https://npmjs.org/package/nanotools)
-
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/pingsrl/nanotools?branch=master&svg=true)](https://ci.appveyor.com/project/pingsrl/nanotools/branch/master)
-[![Codecov](https://codecov.io/gh/pingsrl/nanotools/branch/master/graph/badge.svg)](https://codecov.io/gh/pingsrl/nanotools)
 [![Downloads/week](https://img.shields.io/npm/dw/nanotools.svg)](https://npmjs.org/package/nanotools)
 [![License](https://img.shields.io/npm/l/nanotools.svg)](https://github.com/pingsrl/nanotools/blob/master/package.json)
 
-<!-- toc -->
-# Usage
-<!-- usage -->
-# Commands
-<!-- commands -->
+# What is this?
+
+This is a simple tool that opens the database component of [nanobox.io](http://nanobox.io) in your favorite ide (It must support URI like `mysql://` o `postgres://`)
+
+# Installation
+
+    npm i -g nanotools
+
+# Usage examples
+
+### Connect to local DB
+
+    $ cd my-nanobox-project
+    $ nanotools db [local]
+    running open mysql://nanobox:78sdhdJAax@172.23.0.34/gonano
+
+### Connect to remote storage
+
+    $ cd my-nanobox-project
+    $ nanotools storage productions
+    running open sftp://nanobox:78sdhdJAax@127.0.0.1:1234/app
