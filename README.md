@@ -5,13 +5,13 @@ Connect to Nanobox.io Database
 Currently tested on Mac OS only
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/nanotools.svg)](https://npmjs.org/package/nanotools)
-[![Downloads/week](https://img.shields.io/npm/dw/nanotools.svg)](https://npmjs.org/package/nanotools)
+[![Version](https://img.shields.io/npm/v/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
+[![Downloads/week](https://img.shields.io/npm/dw/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
 [![License](https://img.shields.io/npm/l/nanotools.svg)](https://github.com/pingsrl/nanotools/blob/master/package.json)
 
 # What is this?
 
-This is a simple tool that opens the database component of [nanobox.io](http://nanobox.io) in your favorite ide (It must support URI like `mysql://` o `postgres://`)
+This is a simple tool to interact with data (storage & db) componens of [nanobox.io](http://nanobox.io)
 
 # Installation
 
