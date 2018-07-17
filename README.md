@@ -15,7 +15,7 @@ This is a simple tool to interact with data (storage & db) componens of [nanobox
 
 # Installation
 
-    npm i -g nanotools
+    npm i -g @pingsrl/nanotools
 
 # Usage examples
 
