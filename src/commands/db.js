@@ -1,11 +1,21 @@
 const { Command, flags } = require('@oclif/command');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const { read } = require('node-yaml');
 
 class DbCommand extends Command {
 	async run() {
 		const { flags } = this.parse(DbCommand);
 		const env = await this.getEnv(flags.env);
+
+		if (flags.env !== 'local') {
+			try {
+				let tunnel = await this.openTunnel();
+				env.host = '127.0.0.1:5444';
+			} catch (e) {
+				this.log(`Error opening tunnel ${e}`);
+				return;
+			}
+		}
 		if (env) {
 			const dbType = await this.getDBType();
 			const cmd = `open ${dbType}://${env.user}:${env.pass}@${
@@ -16,9 +26,22 @@ class DbCommand extends Command {
 		}
 	}
 
-	async getEnv(env = 'local') {
-		let nanobox_output = await this.execute(`nanobox info ${env}`);
+	async getEnv(env) {
+		let nanobox_output = await this.execute(`nanobox evar ls ${env}`);
 		return this.parseEnv(nanobox_output);
+	}
+
+	async openTunnel() {
+		let ouput = await this.spawn('nanobox', [
+			'tunnel',
+			'data.db',
+			'-p',
+			'5444'
+		]);
+		if (ouput.indexOf('Error') === -1) {
+			return false;
+		}
+		return true;
 	}
 
 	parseEnv(nanobox_output) {
@@ -31,6 +54,10 @@ class DbCommand extends Command {
 		const user = this.searchInOutput(lines, 'DATA_DB_USER');
 		const host = this.searchInOutput(lines, 'DATA_DB_HOST');
 		const pass = this.searchInOutput(lines, 'DATA_DB_PASS');
+
+		if (!user || !host || !pass) {
+			return false;
+		}
 
 		return {
 			user,
@@ -74,9 +101,31 @@ class DbCommand extends Command {
 	}
 
 	execute(command) {
-		return new Promise(callback => {
-			exec(command, function(error, stdout, stderr) {
-				callback(stdout);
+		return new Promise((ok, fail) => {
+			exec(command, (error, stdout, stderr) => {
+				if (error) {
+					fail(error);
+				} else {
+					ok(stdout);
+				}
+			});
+		});
+	}
+
+	spawn(command, args) {
+		return new Promise((ok, fail) => {
+			let cmd = spawn(command, args);
+
+			cmd.stdout.on('data', data => {
+				ok(data);
+			});
+
+			cmd.stderr.on('data', data => {
+				if (data.indexOf('ADDRESS IN USE') != -1) {
+					fail(data);
+				} else if (data.indexOf('+ Secure tunnel established to') != -1) {
+					ok(data);
+				}
 			});
 		});
 	}
@@ -89,7 +138,11 @@ DbCommand.flags = {
 	version: flags.version({ char: 'v' }),
 	// add --help flag to show CLI version
 	help: flags.help({ char: 'h' }),
-	env: flags.string({ char: 'e', description: 'name to print' })
+	env: flags.string({
+		char: 'e',
+		description: 'the environment to use',
+		default: 'local'
+	})
 };
 
 module.exports = DbCommand;
