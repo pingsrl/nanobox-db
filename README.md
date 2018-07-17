@@ -22,11 +22,11 @@ This is a simple tool to interact with data (storage & db) componens of [nanobox
 ### Connect to local DB
 
     $ cd my-nanobox-project
-    $ nanotools db [local]
+    $ nanotools db [local|default]
     running open mysql://nanobox:78sdhdJAax@172.23.0.34/gonano
 
-### Connect to remote storage
+### COMING SOON: Connect to remote storage
 
     $ cd my-nanobox-project
-    $ nanotools storage productions
+    $ nanotools storage [local|default]
     running open sftp://nanobox:78sdhdJAax@127.0.0.1:1234/app
