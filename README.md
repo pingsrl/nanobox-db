@@ -1,24 +1,18 @@
-# nanobox-db
+nanotools
+=========
 
 Connect to Nanobox.io Database
 
-Currently tested on Mac OS only
-
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/nanobox-db.svg)](https://npmjs.org/package/nanobox-db)
-[![Downloads/week](https://img.shields.io/npm/dw/nanobox-db.svg)](https://npmjs.org/package/nanobox-db)
-[![License](https://img.shields.io/npm/l/nanobox-db.svg)](https://github.com/G3z/nanobox-db/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/nanotools.svg)](https://npmjs.org/package/nanotools)
 
-# What is this?
+[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/pingsrl/nanotools?branch=master&svg=true)](https://ci.appveyor.com/project/pingsrl/nanotools/branch/master)
+[![Codecov](https://codecov.io/gh/pingsrl/nanotools/branch/master/graph/badge.svg)](https://codecov.io/gh/pingsrl/nanotools)
+[![Downloads/week](https://img.shields.io/npm/dw/nanotools.svg)](https://npmjs.org/package/nanotools)
+[![License](https://img.shields.io/npm/l/nanotools.svg)](https://github.com/pingsrl/nanotools/blob/master/package.json)
 
-This is a simple tool that opens the database component of [nanobox.io](http://nanobox.io) in your favorite ide (It must support URI like `mysql://` o `postgres://`)
-
-# Installation
-
-    npm i -g nanobox-db
-
+<!-- toc -->
 # Usage
-
-    $ cd my-nanobox-project
-    $ nanobox-db
-    running open mysql://nanobox:78sdhdJAax@172.23.0.34/gonano
+<!-- usage -->
+# Commands
+<!-- commands -->

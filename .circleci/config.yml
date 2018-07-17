@@ -32,7 +32,7 @@ jobs:
 
 workflows:
   version: 2
-  "nanobox-db":
+  "nanotools":
     jobs:
       - node-latest
       - node-8
