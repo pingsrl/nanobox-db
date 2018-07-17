@@ -12,7 +12,7 @@ class DbCommand extends Command {
 				let tunnel = await this.openTunnel();
 				env.host = '127.0.0.1:5444';
 			} catch (e) {
-				this.log(`Error opening tunnel ${e}`);
+				this.log(`Error opening tunnel: ${e}`);
 				return;
 			}
 		}
@@ -122,7 +122,7 @@ class DbCommand extends Command {
 
 			cmd.stderr.on('data', data => {
 				if (data.indexOf('ADDRESS IN USE') != -1) {
-					fail(data);
+					fail('PORT 5444 IN USE');
 				} else if (data.indexOf('+ Secure tunnel established to') != -1) {
 					ok(data);
 				}
