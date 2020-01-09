@@ -9,7 +9,7 @@ class DbCommand extends Command {
 
 		if (flags.env !== "local") {
 			try {
-				let tunnel = await this.openTunnel();
+				let tunnel = await this.openTunnel(flags.env);
 				env.host = "127.0.0.1:5444";
 			} catch (e) {
 				this.log(`Error opening tunnel: ${e}`);
@@ -29,9 +29,10 @@ class DbCommand extends Command {
 		return this.parseEnv(nanobox_output);
 	}
 
-	async openTunnel() {
+	async openTunnel(env = 'default') {
 		let ouput = await this.spawn("nanobox", [
 			"tunnel",
+			env
 			"data.db",
 			"-p",
 			"5444"
