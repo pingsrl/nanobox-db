@@ -1,16 +1,16 @@
-const { Command, flags } = require('@oclif/command');
-const { exec, spawn } = require('child_process');
-const { read } = require('node-yaml');
+const { Command, flags } = require("@oclif/command");
+const { exec, spawn } = require("child_process");
+const { read } = require("node-yaml");
 
 class DbCommand extends Command {
 	async run() {
 		const { flags } = this.parse(DbCommand);
 		const env = await this.getEnv(flags.env);
 
-		if (flags.env !== 'local') {
+		if (flags.env !== "local") {
 			try {
 				let tunnel = await this.openTunnel();
-				env.host = '127.0.0.1:5444';
+				env.host = "127.0.0.1:5444";
 			} catch (e) {
 				this.log(`Error opening tunnel: ${e}`);
 				return;
@@ -18,9 +18,7 @@ class DbCommand extends Command {
 		}
 		if (env) {
 			const dbType = await this.getDBType();
-			const cmd = `open ${dbType}://${env.user}:${env.pass}@${
-				env.host
-			}/gonano`;
+			const cmd = `open ${dbType}://${env.user}:${env.pass}@${env.host}/gonano`;
 			this.log(`running ${cmd}`);
 			this.execute(cmd);
 		}
@@ -32,28 +30,28 @@ class DbCommand extends Command {
 	}
 
 	async openTunnel() {
-		let ouput = await this.spawn('nanobox', [
-			'tunnel',
-			'data.db',
-			'-p',
-			'5444'
+		let ouput = await this.spawn("nanobox", [
+			"tunnel",
+			"data.db",
+			"-p",
+			"5444"
 		]);
-		if (ouput.indexOf('Error') === -1) {
+		if (ouput.indexOf("Error") === -1) {
 			return false;
 		}
 		return true;
 	}
 
 	parseEnv(nanobox_output) {
-		if (nanobox_output.indexOf('Whoops,') !== -1) {
+		if (nanobox_output.indexOf("Whoops,") !== -1) {
 			this.log(nanobox_output);
 			return;
 		}
-		const lines = nanobox_output.split('\n');
+		const lines = nanobox_output.split("\n");
 
-		const user = this.searchInOutput(lines, 'DATA_DB_USER');
-		const host = this.searchInOutput(lines, 'DATA_DB_HOST');
-		const pass = this.searchInOutput(lines, 'DATA_DB_PASS');
+		const user = this.searchInOutput(lines, "DATA_DB_USER");
+		const host = this.searchInOutput(lines, "DATA_DB_HOST");
+		const pass = this.searchInOutput(lines, "DATA_DB_PASS");
 
 		if (!user || !host || !pass) {
 			return false;
@@ -67,28 +65,28 @@ class DbCommand extends Command {
 	}
 
 	searchInOutput(lines, variable) {
-		let line = lines.filter(l => l.indexOf(variable + ' ') !== -1).pop();
+		let line = lines.filter(l => l.indexOf(variable + " ") !== -1).pop();
 		if (!line) {
 			return;
 		}
 		return line
-			.split(' = ')
+			.split(" = ")
 			.pop()
 			.trim();
 	}
 
 	async getDBType() {
 		const boxfile = await this.parseBoxFile();
-		const data_image = boxfile['data.db'].image;
-		if (data_image.indexOf('mysql') !== -1) {
-			return 'mysql';
-		} else if (data_image.indexOf('postgres') !== -1) {
-			return 'postgres';
+		const data_image = boxfile["data.db"].image;
+		if (data_image.indexOf("mysql") !== -1) {
+			return "mysql";
+		} else if (data_image.indexOf("postgres") !== -1) {
+			return "postgres";
 		}
 	}
 
 	async parseBoxFile() {
-		const path = process.cwd() + '/boxfile.yml';
+		const path = process.cwd() + "/boxfile.yml";
 		return new Promise((success, fail) => {
 			read(path, (err, data) => {
 				if (err) {
@@ -116,14 +114,14 @@ class DbCommand extends Command {
 		return new Promise((ok, fail) => {
 			let cmd = spawn(command, args);
 
-			cmd.stdout.on('data', data => {
+			cmd.stdout.on("data", data => {
 				ok(data);
 			});
 
-			cmd.stderr.on('data', data => {
-				if (data.indexOf('ADDRESS IN USE') != -1) {
-					fail('PORT 5444 IN USE');
-				} else if (data.indexOf('+ Secure tunnel established to') != -1) {
+			cmd.stderr.on("data", data => {
+				if (data.indexOf("ADDRESS IN USE") != -1) {
+					fail("PORT 5444 IN USE");
+				} else if (data.indexOf("+ Secure tunnel established to") != -1) {
 					ok(data);
 				}
 			});
@@ -135,13 +133,13 @@ DbCommand.description = `Open the database of the current nanobox project in you
 
 DbCommand.flags = {
 	// add --version flag to show CLI version
-	version: flags.version({ char: 'v' }),
+	version: flags.version({ char: "v" }),
 	// add --help flag to show CLI version
-	help: flags.help({ char: 'h' }),
+	help: flags.help({ char: "h" }),
 	env: flags.string({
-		char: 'e',
-		description: 'the environment to use',
-		default: 'local'
+		char: "e",
+		description: "the environment to use",
+		default: "local"
 	})
 };
 
