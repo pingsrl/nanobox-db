@@ -29,10 +29,10 @@ class DbCommand extends Command {
 		return this.parseEnv(nanobox_output);
 	}
 
-	async openTunnel(env = 'default') {
+	async openTunnel(env = "default") {
 		let ouput = await this.spawn("nanobox", [
 			"tunnel",
-			env
+			env,
 			"data.db",
 			"-p",
 			"5444"
