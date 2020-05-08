@@ -1,15 +1,22 @@
 const { Command, flags } = require("@oclif/command");
 const { exec, spawn } = require("child_process");
 const { read } = require("node-yaml");
+const debug = require("debug")("nanotools:db");
 
 class DbCommand extends Command {
 	async run() {
 		const { flags } = this.parse(DbCommand);
+
+		debug("flags %o", flags);
 		const env = await this.getEnv(flags.env, flags.component);
+
+		debug("env %o", env);
 
 		if (flags.env !== "local") {
 			try {
+				debug("opening tunnel");
 				let tunnel = await this.openTunnel(flags.env);
+				debug("tunnel opened");
 				env.host = "127.0.0.1:5444";
 			} catch (e) {
 				this.log(`Error opening tunnel: ${e}`);
@@ -17,10 +24,12 @@ class DbCommand extends Command {
 			}
 		}
 		if (env) {
-			const dbType = await this.getDBType();
+			debug("opening connection");
+			const dbType = await this.getDBType(flags.component);
 			const cmd = `open ${dbType}://${env.user}:${env.pass}@${env.host}/gonano`;
 			this.log(`running ${cmd}`);
 			this.execute(cmd);
+		} else {
 		}
 	}
 
@@ -64,6 +73,8 @@ class DbCommand extends Command {
 		);
 
 		if (!user || !host || !pass) {
+			this.log(`missing data.${data_component}`);
+
 			return false;
 		}
 
@@ -82,9 +93,11 @@ class DbCommand extends Command {
 		return line.split(" = ").pop().trim();
 	}
 
-	async getDBType() {
+	async getDBType(data_component) {
 		const boxfile = await this.parseBoxFile();
-		const data_image = boxfile["data.db"].image;
+		debug("boxfile %o", boxfile);
+		const data_image = boxfile[`data.${data_component}`].image;
+		debug("data.image: %s", data_image);
 		if (data_image.indexOf("mysql") !== -1) {
 			return "mysql";
 		} else if (data_image.indexOf("postgres") !== -1) {
@@ -94,15 +107,7 @@ class DbCommand extends Command {
 
 	async parseBoxFile() {
 		const path = process.cwd() + "/boxfile.yml";
-		return new Promise((success, fail) => {
-			read(path, (err, data) => {
-				if (err) {
-					fail(err);
-				} else {
-					success(data);
-				}
-			});
-		});
+		return read(path);
 	}
 
 	execute(command) {
