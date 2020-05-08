@@ -8,21 +8,21 @@
 	},
 	"bugs": "https://github.com/pingsrl/nanotools/issues",
 	"dependencies": {
-		"@oclif/command": "^1.4.34",
-		"@oclif/config": "^1.6.33",
+		"@oclif/command": "^1.6.1",
+		"@oclif/config": "^1.15.1",
 		"@oclif/plugin-help": "^2.0.5",
-		"node-yaml": "^3.1.1"
+		"node-yaml": "^4.0.1"
 	},
 	"devDependencies": {
-		"@oclif/dev-cli": "^1.15.4",
-		"@oclif/test": "^1.1.0",
+		"@oclif/dev-cli": "^1.22.2",
+		"@oclif/test": "^1.2.5",
 		"babel-eslint": "^8.2.5",
-		"chai": "^4.1.2",
+		"chai": "^4.2.0",
 		"eslint": "^4.19.1",
 		"eslint-config-oclif": "^1.5.1",
-		"eslint-plugin-react": "^7.10.0",
-		"fancy-test": "^1.2.0",
-		"globby": "^8.0.1",
+		"eslint-plugin-react": "^7.19.0",
+		"fancy-test": "^1.4.7",
+		"globby": "^11.0.0",
 		"mocha": "^5.2.0",
 		"nyc": "^12.0.2"
 	},
