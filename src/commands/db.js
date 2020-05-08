@@ -35,7 +35,7 @@ class DbCommand extends Command {
 			env,
 			"data.db",
 			"-p",
-			"5444"
+			"5444",
 		]);
 		if (ouput.indexOf("Error") === -1) {
 			return false;
@@ -61,19 +61,16 @@ class DbCommand extends Command {
 		return {
 			user,
 			host,
-			pass
+			pass,
 		};
 	}
 
 	searchInOutput(lines, variable) {
-		let line = lines.filter(l => l.indexOf(variable + " ") !== -1).pop();
+		let line = lines.filter((l) => l.indexOf(variable + " ") !== -1).pop();
 		if (!line) {
 			return;
 		}
-		return line
-			.split(" = ")
-			.pop()
-			.trim();
+		return line.split(" = ").pop().trim();
 	}
 
 	async getDBType() {
@@ -115,11 +112,11 @@ class DbCommand extends Command {
 		return new Promise((ok, fail) => {
 			let cmd = spawn(command, args);
 
-			cmd.stdout.on("data", data => {
+			cmd.stdout.on("data", (data) => {
 				ok(data);
 			});
 
-			cmd.stderr.on("data", data => {
+			cmd.stderr.on("data", (data) => {
 				if (data.indexOf("ADDRESS IN USE") != -1) {
 					fail("PORT 5444 IN USE");
 				} else if (data.indexOf("+ Secure tunnel established to") != -1) {
@@ -140,8 +137,8 @@ DbCommand.flags = {
 	env: flags.string({
 		char: "e",
 		description: "the environment to use",
-		default: "local"
-	})
+		default: "local",
+	}),
 };
 
 module.exports = DbCommand;

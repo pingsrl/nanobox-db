@@ -32,24 +32,21 @@ class StorageCommand extends Command {
 		return {
 			user,
 			host,
-			pass
+			pass,
 		};
 	}
 
 	searchInOutput(lines, variable) {
-		let line = lines.filter(l => l.indexOf(variable + " ") !== -1).pop();
+		let line = lines.filter((l) => l.indexOf(variable + " ") !== -1).pop();
 		if (!line) {
 			return;
 		}
-		return line
-			.split(" = ")
-			.pop()
-			.trim();
+		return line.split(" = ").pop().trim();
 	}
 
 	execute(command) {
-		return new Promise(callback => {
-			exec(command, function(error, stdout, stderr) {
+		return new Promise((callback) => {
+			exec(command, function (error, stdout, stderr) {
 				callback(stdout);
 			});
 		});
@@ -63,7 +60,7 @@ StorageCommand.flags = {
 	version: flags.version({ char: "v" }),
 	// add --help flag to show CLI version
 	help: flags.help({ char: "h" }),
-	env: flags.string({ char: "e", description: "name to print" })
+	env: flags.string({ char: "e", description: "name to print" }),
 };
 
 module.exports = StorageCommand;
