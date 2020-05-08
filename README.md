@@ -5,9 +5,9 @@ Connect to Nanobox.io Database
 Currently tested on Mac OS only
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
-[![Downloads/week](https://img.shields.io/npm/dw/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
-[![License](https://img.shields.io/npm/l/nanotools.svg)](https://github.com/pingsrl/nanotools/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/@pingsrl/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
+[![Downloads/week](https://img.shields.io/npm/dw/@pingsrl/nanotools.svg)](https://npmjs.org/package/@pingsrl/nanotools)
+[![License](https://img.shields.io/npm/l/@pingsrl/nanotools.svg)](https://github.com/pingsrl/nanotools/blob/master/package.json)
 
 # What is this?
 
