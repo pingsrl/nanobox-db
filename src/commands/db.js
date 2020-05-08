@@ -5,7 +5,7 @@ const { read } = require("node-yaml");
 class DbCommand extends Command {
 	async run() {
 		const { flags } = this.parse(DbCommand);
-		const env = await this.getEnv(flags.env);
+		const env = await this.getEnv(flags.env, flags.component);
 
 		if (flags.env !== "local") {
 			try {
@@ -24,9 +24,9 @@ class DbCommand extends Command {
 		}
 	}
 
-	async getEnv(env) {
+	async getEnv(env, data_component) {
 		let nanobox_output = await this.execute(`nanobox evar ls ${env}`);
-		return this.parseEnv(nanobox_output);
+		return this.parseEnv(nanobox_output, data_component);
 	}
 
 	async openTunnel(env = "default") {
@@ -43,16 +43,25 @@ class DbCommand extends Command {
 		return true;
 	}
 
-	parseEnv(nanobox_output) {
+	parseEnv(nanobox_output, data_component) {
 		if (nanobox_output.indexOf("Whoops,") !== -1) {
 			this.log(nanobox_output);
 			return;
 		}
 		const lines = nanobox_output.split("\n");
 
-		const user = this.searchInOutput(lines, "DATA_DB_USER");
-		const host = this.searchInOutput(lines, "DATA_DB_HOST");
-		const pass = this.searchInOutput(lines, "DATA_DB_PASS");
+		const user = this.searchInOutput(
+			lines,
+			`DATA_${data_component.toUpperCase()}_USER`
+		);
+		const host = this.searchInOutput(
+			lines,
+			`DATA_${data_component.toUpperCase()}_HOST`
+		);
+		const pass = this.searchInOutput(
+			lines,
+			`DATA_${data_component.toUpperCase()}_PASS`
+		);
 
 		if (!user || !host || !pass) {
 			return false;
@@ -138,6 +147,11 @@ DbCommand.flags = {
 		char: "e",
 		description: "the environment to use",
 		default: "local",
+	}),
+	component: flags.string({
+		char: "c",
+		description: "the data component to connect to",
+		default: "db",
 	}),
 };
 
